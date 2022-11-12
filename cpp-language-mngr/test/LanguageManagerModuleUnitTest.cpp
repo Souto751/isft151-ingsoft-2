@@ -1,4 +1,4 @@
-#define CATCH_CONFIG_MAIN  // This tells Catch to provide a main() - only do this in one cpp file
+#define CATCH_CONFIG_MAIN 
 
 #include <ILanguageManager.hpp>
 #include <ModuleLoader.hpp>
@@ -6,9 +6,9 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+
 using namespace std;
 
-/**@todo probar si esto es posible, sino va dentro del test:*/
 import languageManagerModule = "../lib/LanguageManagerModule";
  
 TEST_CASE( "LanguageManager create instance", "[LanguageManager new]" ) 
@@ -48,6 +48,33 @@ TEST_CASE( "Correct translation into Spanish", "[LanguageManager getTranslation]
     REQUIRE( translation == "¡Hola Mundo!" );
 }
 
+TEST_CASE("Correct translation into Spanish. Another string", "[LanguageManager getTranslation]")
+{
+    // Arrange
+    ILanguageManager* lm = languageManagerModule.getInstanceAs<ILanguageManager*>();
+ 
+    // Act
+    lm->setLanguage("esAR");
+    string translation = lm->translate("HELLO_TODO");
+        
+    // Assert
+    REQUIRE( translation == "¡Hola Todo!" );
+}
+
+TEST_CASE("Correct translation into Spanish. Another string 2", "[LanguageManager getTranslation]")
+{
+    // Arrange
+    ILanguageManager* lm = languageManagerModule.getInstanceAs<ILanguageManager*>();
+    
+
+    // Act
+    lm->setLanguage("esAR");
+    string translation = lm->translate("HELLO_NADA");
+        
+    // Assert
+    REQUIRE( translation == "NULL TRANSLATION OF KEY: HELLO_NADA!" );
+}
+
 TEST_CASE( "Correct translation into English", "[LanguageManager getTranslation]" )
 {
     // Arrange
@@ -65,10 +92,23 @@ TEST_CASE( "Correct translation into French", "[LanguageManager getTranslation]"
 {
     // Arrange
     ILanguageManager* lm = languageManagerModule.getInstanceAs<ILanguageManager*>();
- 
+
     // Act
     lm->setLanguage("frFR");
     string translation = lm->translate("HELLO_WORLD");
+        
+    // Assert
+    REQUIRE( translation == "¡Salut monde!" );
+}
+
+TEST_CASE( "Correct translation into French with Semicolon", "[LanguageManager getTranslation]" )
+{
+    // Arrange
+    ILanguageManager* lm = languageManagerModule.getInstanceAs<ILanguageManager*>();
+    
+    // Act
+    lm->setLanguage("frFR");
+    string translation = lm->translate("HELLO_WORLD1");
         
     // Assert
     REQUIRE( translation == "¡Salut monde!" );

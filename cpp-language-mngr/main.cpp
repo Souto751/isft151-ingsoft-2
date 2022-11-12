@@ -12,7 +12,6 @@
 #include <iostream>
 #include <ILanguageManager.hpp>
 #include <ModuleLoader.hpp>
-#include <locale.h>
 #include <Windows.h>
 
 using namespace std;
@@ -20,7 +19,7 @@ import lmModule = "./lib/LanguageManagerModule";
 
 int main()
 {
-    setlocale(LC_CTYPE, "Spanish");
+    SetConsoleOutputCP(CP_UTF8);
 
     ILanguageManager* lm = lmModule.getInstanceAs<ILanguageManager*>();
     
